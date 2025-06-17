@@ -38,11 +38,13 @@ This is a voice-powered AI interview coach application that simulates interview 
 - `static/style.css`: Modern UI styling with gradient backgrounds and responsive design
 
 ### AI Personality Configuration
-The system uses a detailed persona prompt that defines:
-- Character background (data science student, math background)
-- Professional focus (AI that replaces human work)
-- Communication style (confident, under 100 words, conversational)
-- Specific interview context (Home.LLC and 100x role)
+The system uses Swarangi's authentic background including:
+- Mathematics background transitioning to data science
+- Real projects (movie recommender with cosine similarity)
+- Technical skills (Python, Excel automation, APIs, web scraping)
+- Career goals (AI Agent Architect at Home.LLC/100x)
+- Personal traits (rapid execution, learning through discomfort)
+- Communication style (ownership, energy, clarity, under 100 words)
 
 ## Data Flow
 

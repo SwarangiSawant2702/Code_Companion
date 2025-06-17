@@ -1,18 +1,43 @@
 import os
 import logging
 import requests
-from flask import Flask, render_template, request, jsonify
+import uuid
+import time
+from datetime import datetime
+from flask import Flask, render_template, request, jsonify, session
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
+
+# Database setup
+class Base(DeclarativeBase):
+    pass
+
+db = SQLAlchemy(model_class=Base)
 
 # Create the app
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")
 
-# Enable CORS for frontend-backend communication
+# Configure database
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///chatbot.db")
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_recycle": 300,
+    "pool_pre_ping": True,
+}
+
+# Initialize extensions
+db.init_app(app)
 CORS(app)
+
+# Create database tables
+with app.app_context():
+    # Import models to ensure they're registered
+    import models
+    db.create_all()
 
 # Get Gemini API key from environment
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -53,6 +78,13 @@ def chat():
         
         if not GEMINI_API_KEY:
             return jsonify({'error': 'Gemini API key not configured'}), 500
+        
+        # Get or create session ID
+        if 'session_id' not in session:
+            session['session_id'] = str(uuid.uuid4())
+        
+        session_id = session['session_id']
+        start_time = time.time()
         
         # Construct the full prompt
         full_prompt = f"{SYSTEM_PROMPT}\n\nQuestion: {user_message}\nAnswer:"
@@ -95,6 +127,23 @@ def chat():
             return jsonify({'error': 'Invalid response format from AI service'}), 500
         
         app.logger.debug(f"AI response: {ai_response}")
+        
+        # Calculate response time and save to database
+        response_time = time.time() - start_time
+        
+        try:
+            # Save conversation to database
+            conversation = models.Conversation(
+                session_id=session_id,
+                user_message=user_message,
+                ai_response=ai_response,
+                response_time_seconds=response_time
+            )
+            db.session.add(conversation)
+            db.session.commit()
+        except Exception as db_error:
+            app.logger.error(f"Database error: {db_error}")
+            # Continue even if database save fails
         
         return jsonify({'response': ai_response})
         

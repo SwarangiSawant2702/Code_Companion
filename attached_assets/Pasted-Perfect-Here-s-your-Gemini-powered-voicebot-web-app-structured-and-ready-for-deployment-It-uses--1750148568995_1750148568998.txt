@@ -1,0 +1,142 @@
+Perfect! Here's your Gemini-powered voicebot web app — structured and ready for deployment. It uses:
+
+🎙️ Speech-to-text (mic input)
+
+🔁 Gemini API for intelligent responses
+
+🔊 Text-to-speech for voice output
+
+🧠 Your custom personality answers embedded as prompt context
+
+✅ 1. index.html
+html
+Copy
+Edit
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swarangi's Voicebot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🎤 Talk to Swarangi's Voicebot</h1>
+  <div class="container">
+    <button id="recordBtn">🎙️ Start Talking</button>
+    <p><strong>You:</strong> <span id="userText">...</span></p>
+    <p><strong>Bot:</strong> <span id="botReply">...</span></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+✅ 2. style.css
+css
+Copy
+Edit
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 30px;
+  background-color: #f7f8fc;
+}
+
+.container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px auto;
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  background-color: #6200ee;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+p {
+  margin-top: 20px;
+  font-size: 18px;
+}
+✅ 3. script.js
+javascript
+Copy
+Edit
+const API_KEY = "YOUR_GEMINI_API_KEY"; // Replace with your Gemini API key
+
+const recordBtn = document.getElementById("recordBtn");
+const userText = document.getElementById("userText");
+const botReply = document.getElementById("botReply");
+
+// Personal context
+const systemPrompt = `
+You are Swarangi Sawant, answering interview questions for a role at Home.LLC and 100x.
+
+1. Life Story: I’m a data science student with a strong math background and a deep passion for building AI that replaces—not just assists—human work.
+2. Superpower: Combining logic and creative problem-solving — I move fast, learn faster.
+3. Growth Areas: Agent workflows, scalable backend systems, autonomous memory.
+4. Misconception: People think I’m quiet, but I’m already architecting solutions in my head.
+5. Boundaries: I dive into challenges I’m not ready for — then master them through action.
+
+Always answer with confidence, ownership, and a bold, AI-first mindset.
+`;
+
+const synth = window.speechSynthesis;
+let recognition;
+
+if ('webkitSpeechRecognition' in window) {
+  recognition = new webkitSpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+
+  recognition.onresult = async function (event) {
+    const transcript = event.results[0][0].transcript;
+    userText.textContent = transcript;
+    const fullPrompt = `${systemPrompt}\nQuestion: ${transcript}\nAnswer:`;
+
+    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + API_KEY, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: fullPrompt }] }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn’t process that.";
+    botReply.textContent = text;
+
+    // Speak it
+    const utterThis = new SpeechSynthesisUtterance(text);
+    synth.speak(utterThis);
+  };
+
+  recordBtn.addEventListener("click", () => {
+    recognition.start();
+  });
+} else {
+  alert("Speech Recognition is not supported in this browser. Use Chrome.");
+}
+✅ Deployment Instructions (Replit)
+Go to https://replit.com/
+
+Click “+ Create Repl” → “HTML, CSS, JS”
+
+Copy-paste:
+
+index.html, style.css, script.js
+
+Replace YOUR_GEMINI_API_KEY with your actual Gemini API Key
+
+Click “Run” and test it out!
+
+Click “Share” → “Publish” to get a public link for Home.LLC

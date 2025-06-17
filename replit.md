@@ -95,7 +95,14 @@ The system uses Swarangi's authentic background including:
 
 Preferred communication style: Simple, everyday language.
 
-## Changelog
+## Recent Changes
 
-Changelog:
-- June 17, 2025. Initial setup
+- June 17, 2025: Initial setup with voice chatbot functionality
+- June 17, 2025: Personalized AI coach with authentic Swarangi background
+- June 17, 2025: Enhanced introduction with detailed internship achievements and technical skills
+- June 17, 2025: Confirmed stop button functionality for voice recording control
+
+## User Preferences
+
+Preferred communication style: Simple, everyday language
+Enhanced introduction requirement: Deep, compelling responses highlighting NSC India achievement and technical versatility

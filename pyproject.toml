@@ -1,7 +1,7 @@
 [project]
 name = "repl-nix-workspace"
 version = "0.1.0"
-description = "Add your description here"
+description = "Flask-based AI app for deployment on Render"
 requires-python = ">=3.11,<4.0"
 
 dependencies = [
@@ -15,3 +15,6 @@ dependencies = [
     "openai>=1.88.0",
     "sqlalchemy>=2.0.41",
 ]
+
+[tool.poetry]
+package-mode = false

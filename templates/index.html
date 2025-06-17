@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swarangi's AI Interview Coach</title>
+    <title>Swarangi's AI Interview</title>
+
+    <!-- Link to external CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
+        <!-- Header Section -->
         <header>
-            <h1><i class="fas fa-user-tie"></i> Swarangi Sawant - AI Interview Preparation</h1>
+            <h1><i class="fas fa-user-tie"></i> Swarangi Sawant - AI Interview</h1>
             <p class="subtitle">Professional Interview Practice Platform</p>
         </header>
 
+        <!-- Chat Area -->
         <div class="chat-container">
+            <!-- Status Indicator -->
             <div class="status-indicator">
                 <div id="statusIcon" class="status-ready">
                     <i class="fas fa-microphone"></i>
@@ -22,6 +29,7 @@
                 <div id="statusText">Ready to listen</div>
             </div>
 
+            <!-- Control Buttons -->
             <div class="controls">
                 <button id="recordBtn" class="record-btn">
                     <i class="fas fa-microphone"></i>
@@ -33,16 +41,21 @@
                 </button>
             </div>
 
+            <!-- Message Display Area -->
             <div class="conversation">
                 <div class="message-container" id="messageContainer">
                     <div class="welcome-message">
                         <i class="fas fa-robot"></i>
-                        <p>Hi! I'm your AI interview coach. Click "Start Talking" to begin practicing your interview questions. I'll respond as Swarangi Sawant, ready to showcase my skills and experience.</p>
+                        <p>
+                            Hi! I'm your AI interview coach. Click <strong>"Start Talking"</strong> to begin practicing your interview questions.
+                            I'll respond as <strong>Swarangi Sawant</strong>, ready to showcase my skills and experience.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Feature Highlights -->
         <div class="features">
             <div class="feature">
                 <i class="fas fa-comments"></i>
@@ -57,11 +70,12 @@
             <div class="feature">
                 <i class="fas fa-user-tie"></i>
                 <h3>Interview Ready</h3>
-                <p>Personalized responses for Home.LLC and 100x positions</p>
+                <p>Personalized responses for Home.LLC positions</p>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript functionality -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

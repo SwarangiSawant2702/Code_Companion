@@ -1,0 +1,24 @@
+PROJECTS:
+
+1. 🎬 Movie Recommendation System
+   - Developed a content-based movie recommender using cosine similarity.
+   - Tools: Python, pandas, scikit-learn, Jupyter Notebook.
+   - Suggests movies based on user-preferred genre and content.
+
+2. 📊 Automated NSE Dashboard
+   - Built a real-time automated data fetch system for NSE India.
+   - Collected 1000+ data points in under 35 minutes to power live dashboards.
+   - Used JSON APIs, Excel automation, and Python scripting.
+
+3. 🗃️ SQL Database Project
+   - Designed and implemented a structured backend SQL database.
+   - Focused on data normalization, indexing, and efficient schema design.
+
+4. 🗣️ Voice-Based Interview Chatbot
+   - Flask app with Gemini API to simulate AI-based interview coaching.
+   - Supports voice input/output, conversational responses, and real-time feedback.
+
+SOCIAL LINKS:
+
+🔗 GitHub: https://github.com/SwarangiSawant2702  
+🔗 LinkedIn: https://www.linkedin.com/in/swarangi-sawant-0b0235273/
